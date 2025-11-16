@@ -1,0 +1,24 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# Build
+*.dll
+*.exe
+*.pdb
+
+# SQLite DB (lub inny — jeśli chcesz wykluczać)
+*.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.cache
+
+# Publish output
+wwwroot/lib/
