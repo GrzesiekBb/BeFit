@@ -46,8 +46,11 @@ namespace BeFit.Controllers
         // GET: ExConns/Create
         public IActionResult Create()
         {
+            ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name");
+            ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start");
             return View();
         }
+
 
         // POST: ExConns/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -62,6 +65,8 @@ namespace BeFit.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", exConn.TypeId);
+            ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", exConn.SessionId);
             return View(exConn);
         }
 
@@ -78,7 +83,11 @@ namespace BeFit.Controllers
             {
                 return NotFound();
             }
+            ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", exConn.TypeId);
+            ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", exConn.SessionId);
+
             return View(exConn);
+
         }
 
         // POST: ExConns/Edit/5
@@ -113,6 +122,8 @@ namespace BeFit.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", exConn.TypeId);
+            ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", exConn.SessionId);
             return View(exConn);
         }
 

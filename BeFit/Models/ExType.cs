@@ -5,8 +5,10 @@ namespace BeFit.Models
     public class ExType
     {
         public int Id { get; set; }
-        [MaxLength(255)]
-        public string Name { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(255)]
+        [Display(Name = "Nazwa ćwiczenia", Description = "Np. Przysiad, Wyciskanie leżąc")]
+        public string Name { get; set; } = string.Empty;
     }
 }
