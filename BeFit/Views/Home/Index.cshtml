@@ -3,6 +3,39 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Witaj w aplikacji BeFit</h1>
+    <div class="row text-center">
+
+       
+        <div class="col-md-4 mb-3">
+            <a asp-controller="SessionInfoes" asp-action="Index" class="text-decoration-none">
+                <div class="card shadow-sm p-4 h-100">
+                    <h3>Sesje treningowe</h3>
+                    <p>Zarządzaj swoimi treningami.</p>
+                </div>
+            </a>
+        </div>
+
+        
+        <div class="col-md-4 mb-3">
+            <a asp-controller="ExConns" asp-action="Index" class="text-decoration-none">
+                <div class="card shadow-sm p-4 h-100">
+                    <h3>Wykonane ćwiczenia</h3>
+                    <p>Przeglądaj i dodawaj wykonane ćwiczenia.</p>
+                </div>
+            </a>
+        </div>
+
+       
+        <div class="col-md-4 mb-3">
+            <a asp-controller="Stats" asp-action="Index" class="text-decoration-none">
+                <div class="card shadow-sm p-4 h-100">
+                    <h3>Statystyki</h3>
+                    <p>Analizuj swoje postępy treningowe.</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

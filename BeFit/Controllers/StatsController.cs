@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BeFit.Data;
 using BeFit.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
 
 namespace BeFit.Controllers
 {
@@ -16,32 +19,36 @@ namespace BeFit.Controllers
         {
             _context = context;
         }
+        private string GetUserId()
+            => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
         // GET: /Stats
         public async Task<IActionResult> Index()
         {
-            var cutoff = DateTime.Now.AddDays(-28);
+            var userId = GetUserId();
+            var fourWeeksAgo = DateTime.Now.AddDays(-28);
 
-            var stats = await _context.ExConn
+            var recentEntries = await _context.ExConn
+                .Where(e => e.CreatedById == userId)
+                .Where(e => e.SessionInfo.Start >= fourWeeksAgo)
                 .Include(e => e.ExType)
                 .Include(e => e.SessionInfo)
-                .Where(e => e.SessionInfo != null && e.SessionInfo.Start >= cutoff)
-                .GroupBy(e => e.ExType!.Name)
+                .ToListAsync();
+
+            var stats = recentEntries
+                .GroupBy(e => e.ExType.Name)
                 .Select(g => new ExerciseStatsViewModel
                 {
                     ExerciseName = g.Key,
                     ExecutionCount = g.Count(),
-                    TotalReps = g.Sum(x => x.Sets * x.RepsPerSet),
-                    AverageLoad = g.Any()
-                        ? g.Average(x => x.Load)
-                        : 0,
-                    MaxLoad = g.Any()
-                        ? g.Max(x => x.Load)
-                        : 0
+                    TotalReps = g.Sum(e => e.Sets * e.RepsPerSet),
+                    AverageLoad = g.Any() ? g.Average(e => e.Load) : 0,
+                    MaxLoad = g.Any() ? g.Max(e => e.Load) : 0
                 })
-                .ToListAsync();
+                .ToList();
 
             return View(stats);
         }
+
     }
 }
