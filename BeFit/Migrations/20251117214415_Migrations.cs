@@ -190,22 +190,20 @@ namespace BeFit.Migrations
                     ConnId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ExTypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SessionId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SessionInfoSessionId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExConn", x => x.ConnId);
                     table.ForeignKey(
-                        name: "FK_ExConn_ExType_ExTypeId",
-                        column: x => x.ExTypeId,
+                        name: "FK_ExConn_ExType_TypeId",
+                        column: x => x.TypeId,
                         principalTable: "ExType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExConn_SessionInfo_SessionInfoSessionId",
-                        column: x => x.SessionInfoSessionId,
+                        name: "FK_ExConn_SessionInfo_SessionId",
+                        column: x => x.SessionId,
                         principalTable: "SessionInfo",
                         principalColumn: "SessionId",
                         onDelete: ReferentialAction.Cascade);
@@ -249,14 +247,14 @@ namespace BeFit.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExConn_ExTypeId",
+                name: "IX_ExConn_SessionId",
                 table: "ExConn",
-                column: "ExTypeId");
+                column: "SessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExConn_SessionInfoSessionId",
+                name: "IX_ExConn_TypeId",
                 table: "ExConn",
-                column: "SessionInfoSessionId");
+                column: "TypeId");
         }
 
         /// <inheritdoc />

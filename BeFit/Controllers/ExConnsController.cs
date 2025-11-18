@@ -22,8 +22,13 @@ namespace BeFit.Controllers
         // GET: ExConns
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ExConn.ToListAsync());
+            var exConns = _context.ExConn
+                .Include(e => e.ExType)
+                .Include(e => e.SessionInfo);
+
+            return View(await exConns.ToListAsync());
         }
+
 
         // GET: ExConns/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -65,10 +70,14 @@ namespace BeFit.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", exConn.TypeId);
             ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", exConn.SessionId);
+
             return View(exConn);
         }
+
+
 
         // GET: ExConns/Edit/5
         public async Task<IActionResult> Edit(int? id)

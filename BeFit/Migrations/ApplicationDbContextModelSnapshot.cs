@@ -23,13 +23,7 @@ namespace BeFit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ExTypeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("SessionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SessionInfoSessionId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TypeId")
@@ -37,9 +31,9 @@ namespace BeFit.Migrations
 
                     b.HasKey("ConnId");
 
-                    b.HasIndex("ExTypeId");
+                    b.HasIndex("SessionId");
 
-                    b.HasIndex("SessionInfoSessionId");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("ExConn");
                 });
@@ -275,15 +269,15 @@ namespace BeFit.Migrations
 
             modelBuilder.Entity("BeFit.Models.ExConn", b =>
                 {
-                    b.HasOne("BeFit.Models.ExType", "ExType")
+                    b.HasOne("BeFit.Models.SessionInfo", "SessionInfo")
                         .WithMany()
-                        .HasForeignKey("ExTypeId")
+                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BeFit.Models.SessionInfo", "SessionInfo")
+                    b.HasOne("BeFit.Models.ExType", "ExType")
                         .WithMany()
-                        .HasForeignKey("SessionInfoSessionId")
+                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
