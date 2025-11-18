@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BeFit.Data;
 using BeFit.Models;
+using BeFit.Models.DTO;
+using System.Security.Claims;
+
 
 namespace BeFit.Controllers
 {
@@ -62,18 +65,29 @@ namespace BeFit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ExConn exConn)
+        public async Task<IActionResult> Create(ExConnDTO dto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(exConn);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", dto.TypeId);
+                ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", dto.SessionId);
+                return View(dto);
             }
 
-            ViewData["TypeId"] = new SelectList(_context.ExType, "Id", "Name", exConn.TypeId);
-            ViewData["SessionId"] = new SelectList(_context.SessionInfo, "SessionId", "Start", exConn.SessionId);
-            return View(exConn);
+            var exConn = new ExConn
+            {
+                TypeId = dto.TypeId,
+                SessionId = dto.SessionId,
+                Sets = dto.Sets,
+                RepsPerSet = dto.RepsPerSet,
+                Load = dto.Load,
+                CreatedById = GetUserId()
+            };
+
+            _context.Add(exConn);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -176,5 +190,10 @@ namespace BeFit.Controllers
         {
             return _context.ExConn.Any(e => e.ConnId == id);
         }
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        }
+
     }
 }

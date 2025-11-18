@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeFit.Models
 {
@@ -17,5 +18,11 @@ namespace BeFit.Models
         [Display(Name = "Koniec sesji")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime End { get; set; }
+        [Display(Name = "Utworzona przez")]
+        public string CreatedById { get; set; } = string.Empty;
+
+        [ForeignKey(nameof(CreatedById))]
+        public AppUser? CreatedBy { get; set; }
+
     }
 }

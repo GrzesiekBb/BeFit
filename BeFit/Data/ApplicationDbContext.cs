@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using BeFit.Data;
-
+using BeFit.Models;
 
 namespace BeFit.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        public DbSet<BeFit.Models.ExType> ExType { get; set; } = default!;
-        public DbSet<BeFit.Models.SessionInfo> SessionInfo { get; set; } = default!;
-        public DbSet<BeFit.Models.ExConn> ExConn { get; set; } = default!;
+
+        public DbSet<ExType> ExType { get; set; } = default!;
+        public DbSet<SessionInfo> SessionInfo { get; set; } = default!;
+        public DbSet<ExConn> ExConn { get; set; } = default!;
     }
 }

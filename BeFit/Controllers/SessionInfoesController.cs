@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BeFit.Data;
+using BeFit.Models;
+using BeFit.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BeFit.Data;
-using BeFit.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
 
 namespace BeFit.Controllers
 {
@@ -54,16 +57,24 @@ namespace BeFit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SessionId,Start,End")] SessionInfo sessionInfo)
+        public async Task<IActionResult> Create(SessionInfoDTO dto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(dto);
+
+            var session = new SessionInfo
             {
-                _context.Add(sessionInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sessionInfo);
+                Start = dto.Start,
+                End = dto.End,
+                CreatedById = GetUserId()
+            };
+
+            _context.Add(session);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: SessionInfoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -153,5 +164,10 @@ namespace BeFit.Controllers
         {
             return _context.SessionInfo.Any(e => e.SessionId == id);
         }
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        }
+
     }
 }

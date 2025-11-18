@@ -28,5 +28,11 @@ namespace BeFit.Models
 
         [Display(Name = "Obciążenie (kg)")]
         public double Load { get; set; }
+        [Display(Name = "Utworzone przez")]
+        public string CreatedById { get; set; } = string.Empty;
+
+        [ForeignKey(nameof(CreatedById))]
+        public AppUser? CreatedBy { get; set; }
+
     }
 }

@@ -64,20 +64,6 @@ namespace BeFit.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SessionInfo",
-                columns: table => new
-                {
-                    SessionId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SessionInfo", x => x.SessionId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -184,17 +170,48 @@ namespace BeFit.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SessionInfo",
+                columns: table => new
+                {
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    End = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedById = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SessionInfo", x => x.SessionId);
+                    table.ForeignKey(
+                        name: "FK_SessionInfo_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ExConn",
                 columns: table => new
                 {
                     ConnId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SessionId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Sets = table.Column<int>(type: "INTEGER", nullable: false),
+                    RepsPerSet = table.Column<int>(type: "INTEGER", nullable: false),
+                    Load = table.Column<double>(type: "REAL", nullable: false),
+                    CreatedById = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExConn", x => x.ConnId);
+                    table.ForeignKey(
+                        name: "FK_ExConn_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExConn_ExType_TypeId",
                         column: x => x.TypeId,
@@ -247,6 +264,11 @@ namespace BeFit.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExConn_CreatedById",
+                table: "ExConn",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExConn_SessionId",
                 table: "ExConn",
                 column: "SessionId");
@@ -255,6 +277,11 @@ namespace BeFit.Migrations
                 name: "IX_ExConn_TypeId",
                 table: "ExConn",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionInfo_CreatedById",
+                table: "SessionInfo",
+                column: "CreatedById");
         }
 
         /// <inheritdoc />
@@ -282,13 +309,13 @@ namespace BeFit.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "ExType");
 
             migrationBuilder.DropTable(
                 name: "SessionInfo");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
