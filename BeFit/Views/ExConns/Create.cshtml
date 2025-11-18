@@ -4,39 +4,48 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Dodaj wykonanie ćwiczenia</h1>
 
-<h4>ExConn</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <select asp-for="TypeId" class="form-control"
-                        asp-items="@(ViewData["TypeId"] as SelectList)"></select>
-                <span asp-validation-for="TypeId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="SessionId" class="control-label"></label>
-                <select asp-for="SessionId" class="form-control"
-                        asp-items="@(ViewData["SessionId"] as SelectList)"></select>
-
-                <span asp-validation-for="SessionId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="form-group">
+        <label asp-for="TypeId" class="control-label"></label>
+        <select asp-for="TypeId" class="form-control"
+                asp-items="@(ViewData["TypeId"] as SelectList)"></select>
+        <span asp-validation-for="TypeId" class="text-danger"></span>
     </div>
-</div>
+
+    <div class="form-group">
+        <label asp-for="SessionId" class="control-label"></label>
+        <select asp-for="SessionId" class="form-control"
+                asp-items="@(ViewData["SessionId"] as SelectList)"></select>
+        <span asp-validation-for="SessionId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Sets"></label>
+        <input asp-for="Sets" class="form-control" />
+        <span asp-validation-for="Sets" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RepsPerSet"></label>
+        <input asp-for="RepsPerSet" class="form-control" />
+        <span asp-validation-for="RepsPerSet" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Load"></label>
+        <input asp-for="Load" class="form-control" />
+        <span asp-validation-for="Load" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Powrót</a>
 </div>
 
 @section Scripts {

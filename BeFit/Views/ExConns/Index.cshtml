@@ -10,13 +10,16 @@
     <a asp-action="Create">Dodaj nowe wykonanie</a>
 </p>
 
-<table border="1" cellpadding="5" cellspacing="0">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>ID</th>
             <th>Ćwiczenie</th>
             <th>Data startu</th>
             <th>Data końca</th>
+            <th>Serie</th>
+            <th>Powtórzenia</th>
+            <th>Obciążenie</th>
             <th>Akcje</th>
         </tr>
     </thead>
@@ -28,10 +31,13 @@
                 <td>@item.ExType?.Name</td>
                 <td>@item.SessionInfo?.Start.ToString("dd.MM.yyyy HH:mm")</td>
                 <td>@item.SessionInfo?.End.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.Sets</td>
+                <td>@item.RepsPerSet</td>
+                <td>@item.Load</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ConnId">Edytuj</a> |
-                    <a asp-action="Details" asp-route-id="@item.ConnId">Szczegóły</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ConnId">Usuń</a>
+                    <a asp-action="Edit" asp-route-id="@item.ConnId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ConnId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ConnId">Delete</a>
                 </td>
             </tr>
         }
