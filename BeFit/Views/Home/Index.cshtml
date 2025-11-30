@@ -1,48 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Strona główna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Witaj w aplikacji BeFit</h1>
-    <div class="row text-center">
+<div class="text-center mt-5">
+    <h1 class="display-4 mb-4">Witaj w aplikacji BeFit</h1>
 
-       
-        <div class="col-md-4 mb-3">
-            <a asp-controller="SessionInfoes" asp-action="Index" class="text-decoration-none">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3>Sesje treningowe</h3>
-                    <p>Zarządzaj swoimi treningami.</p>
-                </div>
-            </a>
-        </div>
+    <p class="lead" style="font-size:1.35rem; font-weight:500;">
+        Każdy trening przybliża Cię do celu. Każda sesja to krok naprzód.
+        Rejestruj swoje ćwiczenia, analizuj postępy i buduj lepszą wersję siebie.
+    </p>
 
-        
-        <div class="col-md-4 mb-3">
-            <a asp-controller="ExConns" asp-action="Index" class="text-decoration-none">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3>Wykonane ćwiczenia</h3>
-                    <p>Przeglądaj i dodawaj wykonane ćwiczenia.</p>
-                </div>
-            </a>
-        </div>
-
-       
-        <div class="col-md-4 mb-3">
-            <a asp-controller="Stats" asp-action="Index" class="text-decoration-none">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3>Statystyki</h3>
-                    <p>Analizuj swoje postępy treningowe.</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a asp-controller="ExTypes" asp-action="Create" class="text-decoration-none">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3>Dodaj typ ćwiczenia</h3>
-                    <p>Utwórz nowy rodzaj ćwiczenia (tylko admin).</p>
-                </div>
-            </a>
-        </div>
-    </div>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p style="font-size:1.2rem;">
+        Użyj menu na górze strony, aby przejść do swoich treningów, statystyk lub typów ćwiczeń.
+    </p>
 </div>

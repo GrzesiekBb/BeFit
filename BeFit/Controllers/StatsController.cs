@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace BeFit.Controllers
 {
+    [Authorize]
     public class StatsController : Controller
     {
         private readonly ApplicationDbContext _context;
